@@ -18,21 +18,21 @@ namespace Salon
         {
             var host = BuildWebHost(args);
 
-//            using (var scope = host.Services.CreateScope())
-//            {
-//                var services = scope.ServiceProvider;
+            using (var scope = host.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
 
-//                try
-//                {
+                try
+                {
        
-//                    SeedCustomerData.Initialize(services);
-//                }
-//                catch (Exception ex)
-//                {
-//                    var logger = services.GetRequiredService<ILogger<Program>>();
-//                    logger.LogError(ex, "An error occurred seeding the DB.");
-//                }
-//            }
+                    SeedCustomerData.Initialize(services);
+                }
+                catch (Exception ex)
+                {
+                    var logger = services.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(ex, "An error occurred seeding the DB.");
+                }
+            }
 
             host.Run();
         }
