@@ -48,7 +48,7 @@ namespace Salon
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Customers}/{action=Index}");
+                    template: "{controller=Customers}/{action=Index}/{id?}");
             });
         }
     }

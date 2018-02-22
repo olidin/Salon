@@ -19,9 +19,22 @@ namespace Salon.Controllers
         }
 
         // GET: Customers
-        public async Task<IActionResult> Index()
+        //public async Task<IActionResult> Index()
+        //{
+        //return View(await _context.Customer.ToListAsync());
+        //}
+
+        public async Task<IActionResult> Index(string searchString)
         {
-            return View(await _context.Customer.ToListAsync());
+            var customers = from m in _context.Customer
+                         select m;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                customers = customers.Where(s => s.Neighborhood.Contains(searchString));
+            }
+
+            return View(await customers.ToListAsync());
         }
 
         // GET: Customers/Details/5
