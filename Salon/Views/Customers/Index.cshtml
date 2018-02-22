@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Salon.Models.Customer>
+﻿@model Salon.Models.CityViewModel
 
 @{
     ViewData["Title"] = "All Customers";
@@ -12,8 +12,13 @@
 
 <form asp-controller="Customers" asp-action="Index" method="get">
     <p>
+        City: <select asp-for="customerCity" asp-items="Model.city">
+            <option value="">All</option>
+        </select>
+
         Neighborhood: <input type="text" name="SearchString">
         <input type="submit" value="Filter" />
+
     </p>
 </form>
 
@@ -21,34 +26,34 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.FirstName)
+                @Html.DisplayNameFor(model => model.customers[0].FirstName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.LastName)
+                @Html.DisplayNameFor(model => model.customers[0].LastName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Address_1)
+                @Html.DisplayNameFor(model => model.customers[0].Address_1)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Address_2)
+                @Html.DisplayNameFor(model => model.customers[0].Address_2)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.City)
+                @Html.DisplayNameFor(model => model.customers[0].City)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.State)
+                @Html.DisplayNameFor(model => model.customers[0].State)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ZipCode)
+                @Html.DisplayNameFor(model => model.customers[0].ZipCode)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Neighborhood)
+                @Html.DisplayNameFor(model => model.customers[0].Neighborhood)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.customers) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.FirstName)

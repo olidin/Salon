@@ -24,8 +24,13 @@ namespace Salon.Controllers
         //return View(await _context.Customer.ToListAsync());
         //}
 
-        public async Task<IActionResult> Index(string searchString)
+        public async Task<IActionResult> Index(string customerCity, string searchString)
         {
+            // Use LINQ to get list of cities
+            IQueryable<string> cityQuery = from m in _context.Customer
+                                            orderby m.City
+                                            select m.City;
+
             var customers = from m in _context.Customer
                          select m;
 
@@ -34,7 +39,16 @@ namespace Salon.Controllers
                 customers = customers.Where(s => s.Neighborhood.Contains(searchString));
             }
 
-            return View(await customers.ToListAsync());
+            if (!String.IsNullOrEmpty(customerCity))
+            {
+                customers = customers.Where(x => x.City == customerCity);
+            }
+
+            var customerCityVM = new CityViewModel();
+            customerCityVM.city = new SelectList(await cityQuery.Distinct().ToListAsync());
+            customerCityVM.customers = await customers.ToListAsync();
+
+            return View(customerCityVM);
         }
 
         // GET: Customers/Details/5
